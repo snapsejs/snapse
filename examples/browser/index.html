@@ -1,0 +1,8 @@
+<!doctype html>
+<script type="module">
+  import { SnapseRoot, button, state } from 'https://cdn.jsdelivr.net/npm/snapse/dist/snapse.js'
+
+  const s = state({ count: 0 })
+
+  SnapseRoot(button({ click: () => s.count++ }, 'Clicked ', s.count, ' times'))
+</script>

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2021",
+    "useDefineForClassFields": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "rewriteRelativeImportExtensions": true,
+    "paths": {
+      "@/*": ["../src/*"],
+      "src/*": ["../src/*"],
+      "snapse": ["../src/index.ts"],
+      "snapse/DOM": ["../src/DOM.ts"],
+      "snapse/SVG": ["../src/SVG.ts"],
+      "snapse/server": ["../src/server.ts"]
+    },
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    "module": "NodeNext",
+    "outDir": "../dist",
+    "sourceMap": true,
+
+    "declaration": true,
+    "lib": ["es2021", "dom", "dom.iterable"]
+  }
+}

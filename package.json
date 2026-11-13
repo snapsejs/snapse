@@ -1,0 +1,143 @@
+{
+  "name": "snapse",
+  "version": "0.9.0",
+  "homepage": "https://snapse.org",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snapsejs/snapse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/snapsejs/snapse/issues"
+  },
+  "description": "A small runtime-reactive framework for interactive web UIs, pairing fine-grained state with DOM-element components.",
+  "keywords": [
+    "reactive",
+    "state-management",
+    "dom",
+    "framework",
+    "ui",
+    "components",
+    "frontend",
+    "typescript",
+    "fine-grained-reactivity",
+    "signals"
+  ],
+  "license": "MIT",
+  "author": "Johan Rönnblom <johan@ronnblom.net>",
+  "engines": {
+    "node": ">=18"
+  },
+  "type": "module",
+  "main": "./dist/snapse.cjs",
+  "module": "./dist/snapse.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "development": {
+        "import": "./dist/snapse.development.js",
+        "require": "./dist/snapse.development.cjs"
+      },
+      "import": "./dist/snapse.js",
+      "require": "./dist/snapse.cjs"
+    },
+    "./DOM": {
+      "types": "./dist/DOM.d.ts",
+      "development": {
+        "import": "./dist/snapse.DOM.development.js",
+        "require": "./dist/snapse.DOM.development.cjs"
+      },
+      "import": "./dist/snapse.js",
+      "require": "./dist/snapse.DOM.cjs"
+    },
+    "./SVG": {
+      "types": "./dist/SVG.d.ts",
+      "development": {
+        "import": "./dist/snapse.SVG.development.js",
+        "require": "./dist/snapse.SVG.development.cjs"
+      },
+      "import": "./dist/snapse.SVG.js",
+      "require": "./dist/snapse.SVG.cjs"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "development": {
+        "import": "./dist/snapse.server.development.js",
+        "require": "./dist/snapse.server.development.cjs"
+      },
+      "import": "./dist/snapse.js",
+      "require": "./dist/snapse.server.cjs"
+    },
+    "./lint": {
+      "types": "./dist/lint/index.d.ts",
+      "import": "./dist/lint/index.js"
+    }
+  },
+  "peerDependencies": {
+    "@typescript-eslint/utils": "^8.0.0",
+    "typescript": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@typescript-eslint/utils": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "!dist/snapse.cc.input.js"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "prebuild": "rm -rf dist",
+    "build": "vite build && npm run build:cc-input && npm run closurecompile && npm run build:svg-entry && vite build --mode development && npm run build:lint",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit && npx eslint --config config/eslint.config.js . --ext .ts",
+    "lintfix": "npx eslint --config config/eslint.config.js --fix . --ext .ts",
+    "build:readme": "node scripts/buildReadme.mjs",
+    "check:readme": "node scripts/buildReadme.mjs --check",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:bench": "BENCH=1 vitest run --reporter=verbose bench.test.ts",
+    "test:ratio": "node scripts/testByteShare.mjs",
+    "coverage": "vitest run --coverage",
+    "buildtest": "CC_BUILD=true vitest run",
+    "undobench:memory": "BENCH=1 vitest run src/undo/benchmarks/memoryUsage.bench.test.ts --reporter=verbose",
+    "undobench:heap": "BENCH=1 vitest run src/undo/benchmarks/heapComposition.bench.test.ts --reporter=verbose",
+    "undobench": "npm run undobench:memory && npm run undobench:heap",
+    "stryker": "stryker run config/stryker.config.json",
+    "closurecompile": "node scripts/closureCompile.mjs",
+    "build:cc-input": "CC_PREBUILD=true vite build",
+    "build:svg-entry": "node scripts/buildSvgEntry.mjs",
+    "build:lint": "tsc --ignoreConfig --rewriteRelativeImportExtensions lint/index.ts --outDir dist/lint --declaration --module nodenext --target es2021 --skipLibCheck",
+    "makezip": "node scripts/makeTarball.mjs",
+    "verify": "npm run check:readme && npm run lint && npm run test:run && npm run build && npm run buildtest",
+    "verify:pack": "node scripts/verifyPackage.mjs",
+    "prepublishOnly": "npm run verify && npm run verify:pack"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.31.0",
+    "@stryker-mutator/core": "10.0.0",
+    "@stryker-mutator/vitest-runner": "10.0.0",
+    "@stylistic/eslint-plugin": "5.10.0",
+    "@types/jsdom": "28.0.0",
+    "@typescript-eslint/eslint-plugin": "8.58.1",
+    "@typescript-eslint/utils": "8.58.1",
+    "@vitest/coverage-v8": "4.1.0",
+    "eslint": "9.31.0",
+    "eslint-import-resolver-typescript": "4.4.4",
+    "eslint-plugin-import": "2.32.0",
+    "globals": "14.0.0",
+    "google-closure-compiler": "20260610.0.0",
+    "google-closure-compiler-macos": "20260610.0.0",
+    "jsdom": "29.0.0",
+    "typescript": "6.0.2",
+    "typescript-eslint": "8.58.1",
+    "vite": "8.3.4",
+    "vite-plugin-dts": "4.5.4",
+    "vitest": "4.1.0"
+  }
+}

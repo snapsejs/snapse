@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+.stryker-tmp
+
+# Packaging artifacts
+*.tar.gz
+*.tgz
+.DS_Store
